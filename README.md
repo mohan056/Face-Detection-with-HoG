@@ -1,6 +1,11 @@
-# Face Detection using Histogram of Oriented Gradients
+# Face-detection-with-HoG
+This repository implements object-detection using histogram of oriented gradients.
+
+## Histogram of Oriented Gradients
 Hisotgram of Oriented Gradients is one of the earliest ways to represent imaes. This representation 
 is translation invariant so it is able to find similarities between two images very robustly. 
+
+![HOG visualization](visualizations\einstein_hog.png)
 
 In this repository I do the following:
 - extract HoG features from a template image and a test image
