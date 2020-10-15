@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import argparse
 
 
 def get_differential_filter():
@@ -251,23 +252,32 @@ def visualize_face_detection(I_target, bounding_boxes, box_size):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description="Face Mask Detection")
+    parser.add_argument('--img-mode', type=int,
+                        default=1, help='set 1 to run our test demo. set 0 to run on your own template and test image')
+    parser.add_argument('--template-img-path', type=str, help='set to whatever location the template is in.')
+    parser.add_argument('--target-img-path', type=str, help='set to whatever location the target is in.')
 
-    im = cv2.imread('target.png', 0)
-    hog = extract_hog(im)
+    args = parser.parse_args()
+    img_mode = args.img_mode
 
-    I_target = cv2.imread('target.png', 0)
-    #MxN image
+    if img_mode == 1:
+        im = cv2.imread('data/target.png', 0)
+        hog = extract_hog(im)
+        I_target = cv2.imread('data/target.png', 0)
+        #MxN image
+        I_template = cv2.imread('data/template.png', 0)
+        #mxn  face template
+        bounding_boxes = face_recognition(I_target, I_template)
+        I_target_c = cv2.imread('data/target.png')
+        # MxN image (just for visualization)
+        visualize_face_detection(I_target_c, bounding_boxes, I_template.shape[0])
 
-    I_template = cv2.imread('template.png', 0)
-    #mxn  face template
+    else:
+        target = cv2.imread(args.target_img_path, 0)
+        template = cv2.imread(args.template_img_path, 0)
 
-    bounding_boxes = face_recognition(I_target, I_template)
+        target_c = cv2.imread(args.target_img_path, 0)
+        bounding_boxes = face_recognition(target, template)
 
-    I_target_c = cv2.imread('target.png')
-    # MxN image (just for visualization)
-
-    visualize_face_detection(I_target_c, bounding_boxes, I_template.shape[0])
-    #this is visualization code.
-
-
-
+        visualize_face_detection(target_c, bounding_boxes, template.shape[0])
