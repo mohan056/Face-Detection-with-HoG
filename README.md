@@ -1,5 +1,4 @@
 # Face Detection using Histogram of Oriented Gradients
-
 Hisotgram of Oriented Gradients is one of the earliest ways to represent imaes. This representation 
 is translation invariant so it is able to find similarities between two images very robustly. 
 
